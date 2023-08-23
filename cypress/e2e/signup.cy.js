@@ -8,10 +8,13 @@ describe('Sign up tests', () => {
     cy.get('input[type="password"]').type('whatever');
     cy.get('button[type="submit"]').click();
 
-    cy.get('#error')
+    cy.get('[id="error"]')
       .should('be.visible')
       .should('contain.text', 'Email address is already in use');
+
+    cy.location('pathname').should('eq', '/addUser');
   });
+
 
   it('FAIL: Uncomplete form', () => {
     cy.visit('/addUser');
@@ -20,13 +23,16 @@ describe('Sign up tests', () => {
     cy.get('input[type="password"]').type('whatever');
     cy.get('button[type="submit"]').click();
 
-    cy.get('#error')
+    cy.get('[id="error"]')
       .should('be.visible')
       // Debe aparecer un mensaje que nos avise de que
       // no se completaron los campos de firstName y lastName
       .should('contain.text', 'firstName')
       .should('contain.text', 'lastName');
+
+    cy.location('pathname').should('eq', '/addUser');
   });
+
 
   it('FAIL: Invalid email', () => {
     cy.visit('/addUser');
@@ -37,10 +43,13 @@ describe('Sign up tests', () => {
     cy.get('input[type="password"]').type('whatever');
     cy.get('button[type="submit"]').click();
 
-    cy.get('#error')
+    cy.get('[id="error"]')
       .should('be.visible')
       .should('contain.text', 'Email is invalid');
+
+    cy.location('pathname').should('eq', '/addUser');
   });
+
 
   it('FAIL: Short password', () => {
     cy.visit('/addUser');
@@ -51,8 +60,9 @@ describe('Sign up tests', () => {
     cy.get('input[type="password"]').type('w');
     cy.get('button[type="submit"]').click();
 
-    cy.get('#error')
-      .should('be.visible')
+    cy.get('[id="error"]').should('be.visible');
+
+    cy.location('pathname').should('eq', '/addUser');
   });
 
   it('SUCCESS: Cancel button returns to homepage', () => {
@@ -60,7 +70,7 @@ describe('Sign up tests', () => {
 
     cy.get('button[id="cancel"]')
       .should('be.visible')
-      .click()
+      .click();
 
     cy.location('pathname').should('eq', '/login')
   });
