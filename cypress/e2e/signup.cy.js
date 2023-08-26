@@ -4,7 +4,7 @@ describe('Sign up tests', () => {
 
     cy.get('input[id="firstName"]').type('Peter');
     cy.get('input[id="lastName"]').type('Parker');
-    cy.get('input[id="email"]').type('test@gmail.com');
+    cy.get('input[id="email"]').type(Cypress.env('testemail'));
     cy.get('input[type="password"]').type('whatever');
     cy.get('button[type="submit"]').click();
 
@@ -19,7 +19,7 @@ describe('Sign up tests', () => {
   it('FAIL: Uncomplete form', () => {
     cy.visit('/addUser');
 
-    cy.get('input[id="email"]').type('test@gmail.com');
+    cy.get('input[id="email"]').type(Cypress.env('testemail'));
     cy.get('input[type="password"]').type('whatever');
     cy.get('button[type="submit"]').click();
 
@@ -39,7 +39,7 @@ describe('Sign up tests', () => {
 
     cy.get('input[id="firstName"]').type('Peter');
     cy.get('input[id="lastName"]').type('Parker');
-    cy.get('input[id="email"]').type('testgmail.com');
+    cy.get('input[id="email"]').type('invalid.com');
     cy.get('input[type="password"]').type('whatever');
     cy.get('button[type="submit"]').click();
 
@@ -56,7 +56,7 @@ describe('Sign up tests', () => {
 
     cy.get('input[id="firstName"]').type('Peter');
     cy.get('input[id="lastName"]').type('Parker');
-    cy.get('input[id="email"]').type('test@gmail.com');
+    cy.get('input[id="email"]').type(Cypress.env('testemail'));
     cy.get('input[type="password"]').type('w');
     cy.get('button[type="submit"]').click();
 

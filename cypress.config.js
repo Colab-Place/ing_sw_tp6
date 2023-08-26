@@ -1,7 +1,12 @@
 const { defineConfig } = require("cypress");
+require('dotenv').config();
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: 'https://thinking-tester-contact-list.herokuapp.com/',
+    baseUrl: process.env.BASEURL
   },
+  env: {
+    testemail: process.env.TESTEMAIL,
+    testpass: process.env.TESTPASS
+  }
 })

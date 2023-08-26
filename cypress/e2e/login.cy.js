@@ -1,38 +1,41 @@
-describe('Log in tests', () => {
+describe('Login tests', () => {
     it('FAIL:  Incorrect username and password', () => {
-        cy.visit('');
-
-        cy.get('input[id="email"]').type('ranpanpapa123@random.com');
+        // Login 
+        cy.visit('/');
+        cy.get('input[id="email"]').type('invaliduser@random.com');
         cy.get('input[type="password"]').type('InvalidPassword123456789');
         cy.get('button[id="submit"]').click();
 
+        // Assertions
         cy.get('[id="error"]')
             .should('be.visible')
             .should('contain.text', 'Incorrect username or password');
     });
+
 
     it('FAIL:  Correct username and incorrect password', () => {
-        cy.visit('');
-
-        cy.get('input[id="email"]').type('diegoamalia123@yahoo.com');
+        // Login 
+        cy.visit('/');
+        cy.get('input[id="email"]').type(Cypress.env('testemail'));
         cy.get('input[type="password"]').type('InvalidPassword123456789');
         cy.get('button[id="submit"]').click();
 
+        // Assertions
         cy.get('[id="error"]')
             .should('be.visible')
             .should('contain.text', 'Incorrect username or password');
     });
 
 
-    it('SUCCESS: Correct username and password', () => {
-        cy.visit('');
-
-        cy.get('input[id="email"]').type('diegoamalia123@yahoo.com');
-        cy.get('input[type="password"]').type('DiegoAmalia');
+    it('SUCCESS: Redirects to contact list webpage and shows contacts table', () => {
+        // Login 
+        cy.visit('/');
+        cy.get('input[id="email"]').type(Cypress.env('testemail'));
+        cy.get('input[type="password"]').type(Cypress.env('testpass'));
         cy.get('button[id="submit"]').click();
 
-        cy.get('button[id="add-contact"]').should('be.visible');
-
-        cy.location('pathname').should('eq', '/contactList')
+        // Assertions
+        cy.location('pathname').should('eq', '/contactList');
+        cy.get('table').should('exist');
     });
 })
